@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+:root {
+  --void: #0a0a0a;
+  --graphite: #141414;
+  --concrete: #1f1f1f;
+  --steel: #8a8a8a;
+  --mist: #b0b0b0;
+  --bone: #f5f5f0;
+  --gold: #c9a962;
+  --gold-dim: #8a7340;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--void);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Blueprint Grid Pattern */
+.bg-blueprint-grid {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.bg-blueprint-grid-dense {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(201, 169, 98, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 169, 98, 0.06) 1px, transparent 1px);
+}
+
+/* Film Grain Texture Overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Magnetic Gold Fill Button Effect */
+.btn-gold-fill {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.btn-gold-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.btn-gold-fill:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-gold-fill > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-gold-fill:hover {
+  color: var(--void);
+}
+
+/* Underline Draw Effect */
+.hover-underline-gold {
+  position: relative;
+}
+
+.hover-underline-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: var(--gold);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.hover-underline-gold:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--concrete);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dim);
+}
+
+/* ============================================
+   POLISH: Reduced Motion & Performance
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .bg-blueprint-grid,
+  .bg-blueprint-grid-dense {
+    opacity: 0 !important;
+  }
+}
+
+/* ============================================
+   POLISH: Ambient Orb Drift (replaces pulse)
+   ============================================ */
+@keyframes orb-drift-slow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  25% {
+    transform: translate(40px, -30px) scale(1.08);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+    opacity: 0.35;
+  }
+  75% {
+    transform: translate(30px, 15px) scale(1.02);
+    opacity: 0.5;
+  }
+}
+
+.animate-orb-drift {
+  animation: orb-drift-slow 20s ease-in-out infinite;
+}
+
+.animate-orb-drift-delayed {
+  animation: orb-drift-slow 24s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+/* ============================================
+   POLISH: Section Header Gold Line Draw
+   ============================================ */
+.gold-line-draw {
+  position: relative;
+  display: inline-block;
+}
+
+.gold-line-draw::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #c9a962, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gold-line-draw.in-view::after {
+  transform: scaleX(1);
+}
+
+/* ============================================
+   POLISH: Image Reveal Utilities
+   ============================================ */
+.clip-reveal-hidden {
+  clip-path: inset(0 100% 0 0);
+}
+
+.clip-reveal-visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ============================================
+   POLISH: Will-change management
+   ============================================ */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* ============================================
+   POLISH: Focus visible for accessibility
+   ============================================ */
+button:focus-visible,
+a:focus-visible {
+  outline: 1px solid #c9a962;
+  outline-offset: 4px;
+}
